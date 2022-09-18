@@ -31,6 +31,38 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addNestedTodoStatus(String mainID, String itemID) {
+    listOfTodos = [
+      for (final todo in listOfTodos)
+        if (todo.todoItem!.id == mainID)
+          Todo(
+            todoItem: TodoItem(
+              id: todo.todoItem!.id,
+              name: todo.todoItem!.name,
+              isDone: todo.todoItem!.isDone,
+              description: todo.todoItem!.description,
+              isFavourite: todo.todoItem!.isFavourite,
+            ),
+            todoItemList: [
+              for (final todoItem in todo.todoItemList ?? [])
+                if (todoItem!.id == itemID)
+                  TodoItem(
+                    id: todoItem.id,
+                    name: todoItem.name,
+                    isDone: !todoItem.isDone,
+                    description: todoItem.description,
+                    isFavourite: todoItem.isFavourite,
+                  )
+                else
+                  todoItem
+            ],
+          )
+        else
+          todo
+    ];
+    notifyListeners();
+  }
+
   void changeStatus(String id) {
     listOfTodos = [
       for (final todo in listOfTodos)
@@ -43,6 +75,7 @@ class TodoProvider extends ChangeNotifier {
               description: todo.todoItem!.description,
               isFavourite: todo.todoItem!.isFavourite,
             ),
+            todoItemList: todo.todoItemList,
           )
         else
           todo
@@ -61,7 +94,7 @@ final todoList = <Todo>[
       description: '08:30 AM • Nikita\'s Office',
       isFavourite: false,
     ),
-    todoItemList: const [],
+    todoItemList: [],
   ),
   Todo(
     todoItem: TodoItem(
@@ -71,7 +104,7 @@ final todoList = <Todo>[
       description: '09:00 AM',
       isFavourite: false,
     ),
-    todoItemList: const [],
+    todoItemList: [],
   ),
   Todo(
     todoItem: TodoItem(
@@ -81,7 +114,7 @@ final todoList = <Todo>[
       description: '10:00 AM • My Home • Daily',
       isFavourite: true,
     ),
-    todoItemList: const [],
+    todoItemList: [],
   ),
   Todo(
     todoItem: TodoItem(

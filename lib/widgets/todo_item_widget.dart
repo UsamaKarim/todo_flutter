@@ -174,7 +174,10 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                               leading: Checkbox(
                                   value: e.isDone,
                                   onChanged: (value) {
-                                    // provider.changeStatus(e, value!);
+                                    provider.addNestedTodoStatus(
+                                      widget.todo!.todoItem!.id,
+                                      e.id,
+                                    );
                                   }),
                               title: Text(e.name),
                             );
