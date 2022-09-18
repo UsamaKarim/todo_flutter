@@ -11,11 +11,11 @@ import 'package:uuid/uuid.dart';
 class BottomSheetWidget extends StatefulWidget {
   const BottomSheetWidget({
     Key? key,
-    required this.addTodo,
+    required this.addNestedTodo,
     required this.controller,
     required this.todo,
   }) : super(key: key);
-  final VoidCallback addTodo;
+  final VoidCallback addNestedTodo;
   final TextEditingController controller;
   final Todo todo;
 
@@ -70,9 +70,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
         id: const Uuid().v4(),
         name: controller.text,
       );
-      context
-          .read<TodoProvider>()
-          .addNestedTodo(widget.todo.todoItem!.id, todo);
+      context.read<TodoProvider>().addNestedTodo(widget.todo.todoItem.id, todo);
     }
     controller.text = '';
     Navigator.of(context).pop();

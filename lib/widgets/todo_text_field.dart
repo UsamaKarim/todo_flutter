@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class TodoTextField extends StatelessWidget {
   const TodoTextField({
@@ -14,18 +14,18 @@ class TodoTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return CupertinoTextField(
       controller: controller,
-      decoration: InputDecoration(
-        hintText: hintText,
-        suffix: GestureDetector(
-          onTap: addTodo,
-          child: const Icon(Icons.add),
-        ),
-      ),
+      // decoration: InputDecoration(
+      //   hintText: hintText,
+      //   suffix: GestureDetector(
+      //     onTap: addTodo,
+      //     child: const Icon(Icons.add),
+      //   ),
+      // ),
       textInputAction: TextInputAction.done,
       onEditingComplete: addTodo,
-      onSubmitted: (value) => addTodo,
+      // onSubmitted: (value) => addTodo,
     );
   }
 }

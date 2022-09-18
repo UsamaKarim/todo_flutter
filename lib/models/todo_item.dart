@@ -20,4 +20,20 @@ class TodoItem {
   String toString() {
     return 'TodoItem(id: $id, name: $name, isDone: $isDone, isFavourite: $isFavourite, description: $description)';
   }
+
+  TodoItem copyWith({
+    String? id,
+    String? name,
+    bool? isDone,
+    bool? isFavourite,
+    String? description,
+  }) {
+    return TodoItem(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isDone: isDone ?? this.isDone,
+      isFavourite: isFavourite ?? this.isFavourite,
+      description: description ?? this.description,
+    );
+  }
 }

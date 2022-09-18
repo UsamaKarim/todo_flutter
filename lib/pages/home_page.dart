@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
             child: Consumer<TodoProvider>(
               builder: (context, todo, child) {
                 return ListView.builder(
-                  itemCount: todoList.length,
+                  itemCount: todo.listOfTodos.length,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   itemBuilder: ((context, index) {
                     final color = randomColors[index % randomColors.length];

@@ -4,27 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoProvider extends ChangeNotifier {
-  List<Todo> listOfTodos = todoList;
+  List<Todo> listOfTodos = [];
 
   void addTodo(Todo todo) {
     listOfTodos.add(todo);
+    print(listOfTodos.last);
     notifyListeners();
   }
 
   void addNestedTodo(String id, TodoItem nestedTodo) {
     listOfTodos = [
       for (final todo in listOfTodos)
-        if (todo.todoItem!.id == id)
-          Todo(
-            todoItem: TodoItem(
-              id: todo.todoItem!.id,
-              name: todo.todoItem!.name,
-              isDone: todo.todoItem!.isDone,
-              description: todo.todoItem!.description,
-              isFavourite: todo.todoItem!.isFavourite,
-            ),
-            todoItemList: todo.todoItemList?..add(nestedTodo),
-          )
+        if (todo.todoItem.id == id)
+          todo.copyWith(todoItemList: [
+            ...todo.todoItemList,
+            nestedTodo,
+          ])
+        // Todo(
+        //   todoItem: TodoItem(
+        //     id: todo.todoItem.id,
+        //     name: todo.todoItem.name,
+        //     isDone: todo.todoItem.isDone,
+        //     description: todo.todoItem.description,
+        //     isFavourite: todo.todoItem.isFavourite,
+        //   ),
+        //   todoItemList: todo.todoItemList..add(nestedTodo),
+        // )
         else
           todo
     ];
@@ -34,24 +39,26 @@ class TodoProvider extends ChangeNotifier {
   void addNestedTodoStatus(String mainID, String itemID) {
     listOfTodos = [
       for (final todo in listOfTodos)
-        if (todo.todoItem!.id == mainID)
-          Todo(
-            todoItem: TodoItem(
-              id: todo.todoItem!.id,
-              name: todo.todoItem!.name,
-              isDone: todo.todoItem!.isDone,
-              description: todo.todoItem!.description,
-              isFavourite: todo.todoItem!.isFavourite,
-            ),
+        if (todo.todoItem.id == mainID)
+          // Todo(
+          //   todoItem: TodoItem(
+          //     id: todo.todoItem.id,
+          //     name: todo.todoItem.name,
+          //     isDone: todo.todoItem.isDone,
+          //     description: todo.todoItem.description,
+          //     isFavourite: todo.todoItem.isFavourite,
+          //   ),
+          todo.copyWith(
             todoItemList: [
-              for (final todoItem in todo.todoItemList ?? [])
-                if (todoItem!.id == itemID)
-                  TodoItem(
-                    id: todoItem.id,
-                    name: todoItem.name,
+              for (final todoItem in todo.todoItemList)
+                if (todoItem.id == itemID)
+                  // TodoItem(
+                  //   id: todoItem.id,
+                  //   name: todoItem.name,
+                  todoItem.copyWith(
                     isDone: !todoItem.isDone,
-                    description: todoItem.description,
-                    isFavourite: todoItem.isFavourite,
+                    // description: todoItem.description,
+                    // isFavourite: todoItem.isFavourite,
                   )
                 else
                   todoItem
@@ -66,14 +73,14 @@ class TodoProvider extends ChangeNotifier {
   void changeStatus(String id) {
     listOfTodos = [
       for (final todo in listOfTodos)
-        if (todo.todoItem!.id == id)
+        if (todo.todoItem.id == id)
           Todo(
             todoItem: TodoItem(
-              id: todo.todoItem!.id,
-              name: todo.todoItem!.name,
-              isDone: !todo.todoItem!.isDone,
-              description: todo.todoItem!.description,
-              isFavourite: todo.todoItem!.isFavourite,
+              id: todo.todoItem.id,
+              name: todo.todoItem.name,
+              isDone: todo.todoItem.isDone,
+              description: todo.todoItem.description,
+              isFavourite: todo.todoItem.isFavourite,
             ),
             todoItemList: todo.todoItemList,
           )
@@ -94,7 +101,6 @@ final todoList = <Todo>[
       description: '08:30 AM • Nikita\'s Office',
       isFavourite: false,
     ),
-    todoItemList: [],
   ),
   Todo(
     todoItem: TodoItem(
@@ -104,7 +110,6 @@ final todoList = <Todo>[
       description: '09:00 AM',
       isFavourite: false,
     ),
-    todoItemList: [],
   ),
   Todo(
     todoItem: TodoItem(
@@ -114,7 +119,6 @@ final todoList = <Todo>[
       description: '10:00 AM • My Home • Daily',
       isFavourite: true,
     ),
-    todoItemList: [],
   ),
   Todo(
     todoItem: TodoItem(
