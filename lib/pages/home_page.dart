@@ -76,9 +76,19 @@ class _HomePageState extends State<HomePage> {
             child: Consumer<TodoProvider>(
               builder: (context, todo, child) {
                 return ListView.builder(
-                  itemCount: todo.listOfTodos.length,
+                  itemCount: todo.listOfTodos.length + 1,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   itemBuilder: ((context, index) {
+                    if (index == todo.listOfTodos.length) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TodoTextField(
+                          controller: controller,
+                          addTodo: addTodo,
+                          hintText: 'Add a new Todo',
+                        ),
+                      );
+                    }
                     final color = randomColors[index % randomColors.length];
                     return TodoItemWidget(
                       barColor: color,
@@ -89,17 +99,10 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TodoTextField(
-              controller: controller,
-              addTodo: addTodo,
-              hintText: 'Add a new Todo',
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          )
+
+          // const SizedBox(
+          //   height: 10,
+          // )
         ],
       ),
     );
