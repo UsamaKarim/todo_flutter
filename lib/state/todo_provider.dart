@@ -74,16 +74,20 @@ class TodoProvider extends ChangeNotifier {
     listOfTodos = [
       for (final todo in listOfTodos)
         if (todo.todoItem.id == id)
-          Todo(
-            todoItem: TodoItem(
-              id: todo.todoItem.id,
-              name: todo.todoItem.name,
-              isDone: todo.todoItem.isDone,
-              description: todo.todoItem.description,
-              isFavourite: todo.todoItem.isFavourite,
-            ),
-            todoItemList: todo.todoItemList,
-          )
+          todo.copyWith(
+              todoItem: todo.todoItem.copyWith(
+            isDone: !todo.todoItem.isDone,
+          ))
+        // Todo(
+        //   todoItem: TodoItem(
+        //     id: todo.todoItem.id,
+        //     name: todo.todoItem.name,
+        //     isDone: todo.todoItem.isDone,
+        //     description: todo.todoItem.description,
+        //     isFavourite: todo.todoItem.isFavourite,
+        //   ),
+        //   todoItemList: todo.todoItemList,
+        // )
         else
           todo
     ];
