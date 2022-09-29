@@ -48,7 +48,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
   }
 
   final expansionTileKey = GlobalKey();
-  double expansionTileHeight = 4;
+  double expansionTileHeight = 0;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -57,8 +57,9 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
         Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            padding: const EdgeInsets.all(16),
-            height: expansionTileHeight - 4,
+            margin: const EdgeInsets.all(2),
+            // padding: const EdgeInsets.all(16),
+            height: expansionTileHeight,
             width: 05,
             decoration: BoxDecoration(
               color: widget.barColor,
@@ -103,7 +104,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                   },
                   child: SizeChangedLayoutNotifier(
                     child: ExpansionTile(
-                      onExpansionChanged: (value) => setState(() {}),
+                      // onExpansionChanged: (value) => setState(() {}),
                       collapsedTextColor: Colors.black,
                       textColor: Colors.black,
                       initiallyExpanded: true,

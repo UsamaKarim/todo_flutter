@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoProvider extends ChangeNotifier {
-  List<Todo> listOfTodos = [];
+  List<Todo> listOfTodos = todoList;
 
   void addTodo(Todo todo) {
     listOfTodos.add(todo);
