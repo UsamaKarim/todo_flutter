@@ -36,15 +36,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final box =
-          expansionTileKey.currentContext?.findRenderObject() as RenderBox?;
-      if (box != null) {
-        expansionTileHeight = box.size.height;
-
-        setState(() {});
-      }
-    });
+    setBarHeight();
   }
 
   final expansionTileKey = GlobalKey();
@@ -91,15 +83,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                 },
                 child: NotificationListener<SizeChangedLayoutNotification>(
                   onNotification: (notification) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      final box = expansionTileKey.currentContext
-                          ?.findRenderObject() as RenderBox?;
-                      if (box != null) {
-                        expansionTileHeight = box.size.height;
-
-                        setState(() {});
-                      }
-                    });
+                    setBarHeight();
                     return true;
                   },
                   child: SizeChangedLayoutNotifier(
@@ -207,6 +191,18 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
         ),
       ],
     );
+  }
+
+  void setBarHeight() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final box =
+          expansionTileKey.currentContext?.findRenderObject() as RenderBox?;
+      if (box != null) {
+        expansionTileHeight = box.size.height;
+
+        setState(() {});
+      }
+    });
   }
 
   void addNestedTodo() {
