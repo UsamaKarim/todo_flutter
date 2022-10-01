@@ -1,0 +1,26 @@
+name: Setup Flutter
+
+on:
+  push:
+
+jobs:
+  setup-flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Project
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: actions/flutter-actions@v2
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Check Formatting
+        run: flutter format . -o none --set-exit-if-changed 
+
+      - name: Check Lints
+        run: flutter analyze
+
+      - name: Run Tests
+        run: flutter test
