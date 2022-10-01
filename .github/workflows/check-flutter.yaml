@@ -22,5 +22,5 @@ jobs:
       - name: Check Lints
         run: flutter analyze
 
-      - name: Run Tests
-        run: flutter test
+      # - name: Run Tests
+      #   run: flutter test
