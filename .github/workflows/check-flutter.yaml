@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Flutter
-        uses: actions/flutter-actions@v2
+        uses: subosito/flutter-action@v2
 
       - name: Install Dependencies
         run: flutter pub get
