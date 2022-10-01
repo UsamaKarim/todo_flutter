@@ -1,11 +1,9 @@
 import 'package:dribble_ui/models/todo.dart';
-import 'package:dribble_ui/models/todo_item.dart';
 import 'package:dribble_ui/widgets/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:dribble_ui/state/todo_provider.dart';
-import 'package:uuid/uuid.dart';
 
 class TodoItemWidget extends StatefulWidget {
   const TodoItemWidget({
@@ -18,7 +16,7 @@ class TodoItemWidget extends StatefulWidget {
   final Color barColor;
   // final String? todoTitle;
   // final String? todoDescription;
-  final Todo? todo;
+  final Todo todo;
 
   @override
   State<TodoItemWidget> createState() => _TodoItemWidgetState();
@@ -64,14 +62,13 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
             return Theme(
               data: ThemeData().copyWith(dividerColor: Colors.transparent),
               child: GestureDetector(
-                onLongPress: () {
-                  showModalBottomSheet(
+                onLongPress: () async {
+                  await showModalBottomSheet(
                     context: context,
                     builder: (context) {
                       return BottomSheetWidget(
                         controller: controller,
-                        addNestedTodo: addNestedTodo,
-                        todo: widget.todo!,
+                        todo: widget.todo,
                       );
                     },
                     shape: const RoundedRectangleBorder(
@@ -94,13 +91,13 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                       initiallyExpanded: true,
                       key: expansionTileKey,
                       title: Text(
-                        widget.todo?.todoItem.name ?? '',
+                        widget.todo.todoItem.name,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       subtitle: Text(
-                        widget.todo?.todoItem.description ?? '',
+                        widget.todo.todoItem.description,
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.black54,
@@ -108,7 +105,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                       ),
                       leading: GestureDetector(
                         onTap: () {
-                          provider.changeStatus(widget.todo!.todoItem.id);
+                          provider.changeStatus(widget.todo.todoItem.id);
                         },
                         child: Container(
                           height: 40,
@@ -116,7 +113,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black54),
                             shape: BoxShape.circle,
-                            color: (widget.todo?.todoItem.isDone ?? false)
+                            color: (widget.todo.todoItem.isDone)
                                 ? const Color.fromARGB(255, 91, 199, 248)
                                 : Colors.white,
                             boxShadow: const [
@@ -129,29 +126,15 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                               ),
                             ],
                           ),
-                          child: (widget.todo?.todoItem.isDone ?? false)
+                          child: (widget.todo.todoItem.isDone)
                               ? const Icon(
                                   Icons.done,
                                   color: Colors.white,
                                 )
                               : null,
-                          // child: CircleAvatar(
-                          //     // backgroundColor: Color.fromARGB(255, 91, 199, 248),
-                          //     // child: Icon(
-                          //     //   Icons.check,
-                          //     //   color: Colors.white,
-                          //     // ),
-                          //     ),
                         ),
                       ),
-                      // leading: Container(
-                      //   // padding: EdgeInsets.all(8),
-                      //   height: box?.size.height ?? 20,
-                      //   width: 06,
-                      //   decoration: BoxDecoration(color: Colors.orange),
-                      // ),
-                      // leading: ,
-                      trailing: (widget.todo?.todoItem.isFavourite ?? false)
+                      trailing: (widget.todo.todoItem.isFavourite)
                           ? Container(
                               width: 30,
                               height: 30,
@@ -166,7 +149,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                             )
                           : const SizedBox.shrink(),
                       childrenPadding: EdgeInsets.only(left: size.width * 0.1),
-                      children: widget.todo!.todoItemList.map((e) {
+                      children: widget.todo.todoItemList.map((e) {
                         return Consumer<TodoProvider>(
                             builder: (context, provider, child) {
                           return ListTile(
@@ -174,7 +157,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
                                 value: e.isDone,
                                 onChanged: (value) {
                                   provider.addNestedTodoStatus(
-                                    widget.todo!.todoItem.id,
+                                    widget.todo.todoItem.id,
                                     e.id,
                                   );
                                 }),
@@ -203,17 +186,5 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
         setState(() {});
       }
     });
-  }
-
-  void addNestedTodo() {
-    if (controller.text.isNotEmpty) {
-      final todo = Todo(todoItem: widget.todo!.todoItem, todoItemList: [
-        TodoItem(
-          id: const Uuid().v4(),
-          name: controller.text,
-        ),
-      ]);
-      context.read<TodoProvider>().addTodo(todo);
-    }
   }
 }

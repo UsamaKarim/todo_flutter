@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoProvider extends ChangeNotifier {
-  List<Todo> listOfTodos = todoList;
+  List<Todo> listOfTodos = [...todoList];
 
   void addTodo(Todo todo) {
     listOfTodos.add(todo);
-    print(listOfTodos.last);
     notifyListeners();
   }
 
@@ -16,10 +15,12 @@ class TodoProvider extends ChangeNotifier {
     listOfTodos = [
       for (final todo in listOfTodos)
         if (todo.todoItem.id == id)
-          todo.copyWith(todoItemList: [
-            ...todo.todoItemList,
-            nestedTodo,
-          ])
+          todo.copyWith(
+            todoItemList: [
+              ...todo.todoItemList,
+              nestedTodo,
+            ],
+          )
         // Todo(
         //   todoItem: TodoItem(
         //     id: todo.todoItem.id,

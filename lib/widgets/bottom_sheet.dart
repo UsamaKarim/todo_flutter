@@ -11,11 +11,10 @@ import 'package:uuid/uuid.dart';
 class BottomSheetWidget extends StatefulWidget {
   const BottomSheetWidget({
     Key? key,
-    required this.addNestedTodo,
     required this.controller,
     required this.todo,
   }) : super(key: key);
-  final VoidCallback addNestedTodo;
+
   final TextEditingController controller;
   final Todo todo;
 
@@ -25,6 +24,7 @@ class BottomSheetWidget extends StatefulWidget {
 
 class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   final controller = TextEditingController();
+
   @override
   void dispose() {
     controller.dispose();
@@ -38,14 +38,6 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
           child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // TextField(
-          //   controller: controller,
-          //   textInputAction: TextInputAction.done,
-          //   decoration: const InputDecoration(
-          //     hintText: 'Write your task',
-          //     border: OutlineInputBorder(),
-          //   ),
-          // ),
           TodoTextField(
             addTodo: addNestedTodo,
             controller: controller,
