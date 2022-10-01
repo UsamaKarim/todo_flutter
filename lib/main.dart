@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => TodoProvider(),
       child: MaterialApp(
-        title: 'Dribble UI',
+        title: 'Todo Flutter',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
