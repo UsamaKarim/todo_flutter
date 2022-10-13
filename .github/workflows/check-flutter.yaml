@@ -1,7 +1,7 @@
 name: Setup Flutter
 
 on:
-  push:
+  pull_request:
 
 jobs:
   setup-flutter:

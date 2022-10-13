@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.3
   uuid: ^3.0.6
+  google_mobile_ads: ^2.0.1
 
 dev_dependencies:
   flutter_test:
